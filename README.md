@@ -4,7 +4,31 @@ Expose your service methods as endpoints.
 
 # How to use
 
-TODO
+Configure AutoController importing configuration class (use this on any of your configuration classes):
+```
+@Import(AutoControllerConfig.class)
+```
+
+Annotate methods that you want to be exposed.
+```
+@Service
+public class TestService {
+
+    @Expose
+    public String greet(String name) {
+        return "Hello " + name;
+    }
+
+}
+```
+In this case, the mapping will be '/test/greet'.
+
+**Convention**:
+
+* 'Service' part of class name is omitted
+* 'get' part of method name is omitted
+* RequestMethod is GET unless there is a parameter annotated with @RequestBody, then it's POST
+* @Expose contains @ResponseBody, so the result is JSON
 
 # Download
 
