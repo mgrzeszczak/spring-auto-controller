@@ -1,8 +1,6 @@
 package com.github.mgrzeszczak.autocontroller;
 
-import com.google.common.base.CaseFormat;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.condition.ConsumesRequestCondition;
 import org.springframework.web.servlet.mvc.condition.HeadersRequestCondition;
 import org.springframework.web.servlet.mvc.condition.ParamsRequestCondition;
@@ -70,25 +68,11 @@ class ExposeAwareHandlerMapping extends RequestMappingHandlerMapping {
     }
 
     private PatternsRequestCondition getPatterns(Method method) {
-        String classPart = method.getDeclaringClass().getSimpleName().replace("Service", "");
-        String methodPart = method.getName();
-        if (methodPart.startsWith("get") && methodPart.length() > "get".length()) {
-            methodPart = methodPart.replace("get", "");
-        } else {
-            if (methodPart.length() == 1) {
-                methodPart = methodPart.toUpperCase();
-            } else {
-                methodPart = methodPart.substring(0, 1).toUpperCase() + methodPart.substring(1);
-            }
-        }
-        String mapping = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, classPart) + "/" + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_HYPHEN, methodPart);
-        return new PatternsRequestCondition(mapping);
+        return new PatternsRequestCondition(MappingResolver.resolvePath(method.getDeclaringClass().getSimpleName(), method.getName()));
     }
 
     private RequestMethodsRequestCondition getRequestMethods(Method method) {
-        return new RequestMethodsRequestCondition(
-                RequestMethod.POST
-        );
+        return new RequestMethodsRequestCondition(MappingResolver.resolveHttpMethod(method));
     }
 
 }
