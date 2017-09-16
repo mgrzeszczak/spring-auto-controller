@@ -14,19 +14,9 @@ import java.lang.reflect.Method;
 
 class ExposeAwareHandlerMapping extends RequestMappingHandlerMapping {
 
-    public ExposeAwareHandlerMapping() {
+    ExposeAwareHandlerMapping() {
         super();
         setOrder(0);
-    }
-
-    @Override
-    protected void initHandlerMethods() {
-        super.initHandlerMethods();
-    }
-
-    @Override
-    protected void detectHandlerMethods(Object handler) {
-        super.detectHandlerMethods(handler);
     }
 
     @Override
@@ -36,11 +26,6 @@ class ExposeAwareHandlerMapping extends RequestMappingHandlerMapping {
                 .getBeansOfType(Object.class)
                 .values()
                 .forEach(this::scanBean);
-    }
-
-    @Override
-    protected void registerHandlerMethod(Object handler, Method method, RequestMappingInfo mapping) {
-        super.registerHandlerMethod(handler, method, mapping);
     }
 
     private void scanBean(Object bean) {
