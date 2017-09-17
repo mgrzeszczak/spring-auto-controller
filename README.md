@@ -32,7 +32,7 @@ In this case, the mapping will be '/test/greet'.
 
 # Download
 
-TODO
+[![](https://jitpack.io/v/mgrzeszczak/spring-auto-controller.svg)](https://jitpack.io/#mgrzeszczak/spring-auto-controller)
 
 # License
 ```
